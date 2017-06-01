@@ -1,0 +1,579 @@
+##############################################################################
+# Copyright (c) 2017 HUAWEI TECHNOLOGIES CO.,LTD and others.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Apache License, Version 2.0
+# which accompanies this distribution, and is available at
+# http://www.apache.org/licenses/LICENSE-2.0
+##############################################################################
+
+---
+rsyslog_client:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - rsyslog_client_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - rsyslog_client_distro_packages
+
+pip_install:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - pip_install_external_repo_key_package
+        - pip_install_distro_build_packages
+      keys:
+        - pip_install_external_repo_key_package: "ubuntu-cloud-keyring"
+        - uca_repo: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/ocata main"
+      pip:
+        - pip_required_pip_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - pip_install_distro_build_packages
+        - pip_install_external_repo_key_package
+      pip:
+        - pip_required_pip_packages
+      special_packages:
+        - epel-release
+        - yum-plugin-priorities
+        - yum-utils
+
+os_horizon:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - horizon_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - horizon_distro_packages
+
+galera_client:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - galera_client_distro_packages
+      keys:
+        - hash_id: '0xF1656F24C74CD1D8'
+        - keyserver: 'hkp://keyserver.ubuntu.com:80'
+        - repo: 'deb http://mirror.rackspace.com/mariadb/repo/10.1/ubuntu xenial main'
+      special_packages:
+        - apt-transport-https
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - galera_client_distro_packages
+      keys:
+        - keyserver: 'https://yum.mariadb.org'
+        - galera_client_repo:
+            - state: "present"
+            - name: MariaDB
+            - description: "MariaDB Repo"
+            - file: "MariaDB"
+            - baseurl: "http://yum.mariadb.org/10.1/centos/7/x86_64"
+            - gpgkey: "http://yum.mariadb.org/RPM-GPG-KEY-MariaDB"
+#  - pip: MySQL-python
+
+os_ironic:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - ironic_developer_mode_distro_packages
+        - ironic_api_distro_packages
+        - ironic_conductor_distro_packages
+        - ironic_conductor_standalone_distro_packages
+
+os_cinder:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - cinder_distro_packages
+        - cinder_volume_distro_packages
+        - cinder_lvm_volume_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - cinder_distro_packages
+        - cinder_volume_distro_packages
+        - cinder_lvm_volume_distro_packages
+
+rabbitmq_server:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - rabbitmq_dependencies
+        - rabbitmq_distro_packages
+      keys:
+        - rabbitmq_package_url: "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server_3.6.6-1_all.deb"
+  - redhat:
+      name: redhat.yml
+      packages:
+        - rabbitmq_dependencies
+        - rabbitmq_mirror_dependencies
+#          - rabbitmq_distro_packages
+      keys:
+        - rabbitmq_package_url: "http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm"
+
+repo_server:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - repo_server_distro_packages
+        - repo_pkg_cache_server_distro_packages
+  - redhat:
+      name: redhat.yml
+      packages:
+        - repo_server_distro_packages
+        - repo_pkg_cache_server_distro_packages
+
+os_gnocchi:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - gnocchi_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - gnocchi_distro_packages
+
+bird:
+  - ubuntu:
+      name: ubuntu.yml
+      packages:
+        - bird_packages
+      keys:
+        - hash_id: '0xf2331238f9c59a45'
+        - keyserver: 'hkp://keyserver.ubuntu.com:80'
+        - repo: "deb http://ppa.launchpad.net/cz.nic-labs/bird/ubuntu xenial main"
+  - redhat:
+      name: redhat.yml
+      packages:
+        - bird_packages
+      special_packages:
+        - epel-release
+      keys:
+        - url: http://rpm.knot-dns.cz/redhat/RPM-GPG-KEY-network.cz
+        - state: present
+        - name: bird
+        - description: Network.CZ Repository
+        - file: bird
+        - baseurl: "http://rpm.knot-dns.cz/redhat/"
+        - gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-network.cz"
+
+resolvconf:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - resolvconf_packages
+  - redhat:
+      name: redhat.yml
+      packages:
+
+memcached_server:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - memcached_distro_packages
+        - memcached_test_distro_packages
+  - redhat:
+      name: redhat.yml
+      packages:
+        - memcached_distro_packages
+        - memcached_test_distro_packages
+
+rsyslog_server:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - rsyslog_server_distro_packages
+  - redhat:
+      name: redhat.yml
+      packages:
+        - rsyslog_server_distro_packages
+
+os_glance:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - glance_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - glance_distro_packages
+
+os_aodh:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - aodh_distro_packages
+        - aodh_test_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - aodh_distro_packages
+        - aodh_test_distro_packages
+
+os_heat:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - heat_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - heat_distro_packages
+
+haproxy_server:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - haproxy_required_distro_packages
+        - haproxy_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - haproxy_distro_packages
+
+os_barbican:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - barbican_distro_packages
+
+openstack_hosts:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - openstack_host_distro_packages
+      special_packages:
+          - linux-image-extra-4.4.0-21-generic
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - openstack_host_distro_packages
+
+os_magnum:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - magnum_distro_packages
+
+keepalived:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - keepalived_package_name
+      keys:
+        - keepalived_repo_keyid: "7C33BDC6"
+        - keepalived_keyserver: "keyserver.ubuntu.com"
+        - keepalived_repo: "deb http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/ocata main" #newton
+  - redhat:
+      name: redhat.yml
+      packages:
+        - keepalived_package_name
+
+os_swift:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - swift_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - swift_distro_packages
+
+ceph_client:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - libvirt_package
+      special_packages:
+        - ubuntu-cloud-keyring
+      keys:
+        - hash_id: '0xe84ac2c0460f3994'
+        - keyserver: 'hkp://keyserver.ubuntu.com:80'
+        - fallback_keyserver: 'hkp://p80.pool.sks-keyservers.net:80'
+        - ceph_apt_repos: "***********"
+
+  - redhat:
+      name: redhat.yml
+      packages:
+        - libvirt_package
+      keys:
+        - ceph_gpg_keys: 'https://download.ceph.com/keys/release.asc'
+        - ceph_yum_repo_url: "https://download.ceph.com/rpm-jewel/el7/x86_64/"
+
+os_sahara:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - sahara_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - sahara_distro_packages
+
+os_ceilometer:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - ceilometer_distro_packages
+        - ceilometer_developer_mode_distro_packages
+        - ceilometer_apache_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - ceilometer_distro_packages
+        - ceilometer_developer_mode_distro_packages
+        - ceilometer_apache_distro_packages  
+
+os_designate:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - designate_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - designate_distro_packages
+
+openstack-ansible-security: # packages
+  - ubuntu:
+      name: ubuntu.yml
+      packages:
+        - stig_packages
+        - stig_packages_rhel7
+      special_packages:
+        - debsums
+  - redhat:
+      name: redhat.yml
+      packages:
+        - stig_packages
+        - stig_packages_rhel7
+
+repo_build:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - repo_build_distro_packages
+  - redhat:
+      name: redhat.yml
+      packages:
+        - repo_build_distro_packages
+
+os_neutron:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - neutron_ovs_distro_packages
+        - neutron_distro_packages
+        - neutron_lxb_distro_packages
+        - neutron_lbaas_distro_packages
+        - neutron_vpnaas_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - neutron_ovs_distro_packages
+        - neutron_distro_packages
+        - neutron_lxb_distro_packages
+        - neutron_lbaas_distro_packages
+        - neutron_vpnaas_distro_packages
+
+os_nova:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - nova_distro_packages
+        - nova_spice_distro_packages
+        - nova_novnc_distro_packages
+        - nova_compute_kvm_distro_packages
+        - nova_compute_lxd_distro_packages
+        - nova_nginx_distro_packages
+      special_packages:
+        - cryptsetup
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - nova_distro_packages
+        - nova_spice_distro_packages
+        - nova_novnc_distro_packages
+        - nova_compute_kvm_distro_packages
+        - nova_compute_lxd_distro_packages
+        - nova_nginx_distro_packages
+      special_packages:
+        - cryptsetup
+
+unbound:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - unbound_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - unbound
+
+os_tempest:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - tempest_distro_packages
+  - redhat:
+      name: ubuntu-16.04.yml
+      packages:
+        - tempest_distro_packages
+
+os_trove:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - trove_distro_packages
+
+etcd:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - etcd_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - etcd_packages
+
+lxc_hosts:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - lxc_hosts_distro_packages
+        - lxc_cache_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - lxc_hosts_distro_packages
+        - lxc_cache_distro_packages
+
+sshd:
+  - ubuntu:
+      name: Ubuntu_16.yml
+      packages:
+        - sshd_packages
+  - redhat:
+      name: RedHat_7.yml
+      packages:
+        - sshd_packages
+
+galera_server:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - galera_server_required_distro_packages
+        - galera_server_mariadb_distro_packages
+      special_packages:
+        - mariadb-server-10.1
+      keys:
+        - percona_arch_url: "https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.5/binary/debian/xenial/x86_64/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb"
+        - percona_package_path: "/opt/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb"
+        - percona_arch_sha256: "6a71704e625194689d2a6b325765608040ff5da82ac4bc8ce6ac3756f9a9130f"
+        - qpress_arch_url: "https://repo.percona.com/apt/pool/main/q/qpress/qpress_11-1.xenial_amd64.deb"
+        - qpress_package_path: "/opt/qpress_11-1.xenial_amd64.deb"
+        - qpress_arch_sha256: "c615ec08eb38a9cb59541ae1d7ed42db35e92513735834b48d30d4c485e01534"
+        - galera_gpg_keys:
+            - key_name: 'mariadb'
+              keyserver: 'hkp://keyserver.ubuntu.com:80'
+              fallback_keyserver: 'hkp://p80.pool.sks-keyservers.net:80'
+              hash_id: '0xF1656F24C74CD1D8'
+            - key_name: 'percona-xtrabackup'
+              keyserver: 'hkp://keyserver.ubuntu.com:80'
+              fallback_keyserver: 'hkp://p80.pool.sks-keyservers.net:80'
+              hash_id: '0x9334a25f8507efa5'
+        - galera_repo: "deb http://mirror.rackspace.com/mariadb/repo/10.1/ubuntu xenial main"
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - galera_server_required_distro_packages
+        - galera_server_mariadb_distro_packages  
+      special_packages:
+        - MariaDB-server
+      keys:
+        - percona_arch_url: "https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.5/binary/redhat/7/x86_64/percona-xtrabackup-24-2.4.5-1.el7.x86_64.rpm"
+        - percona_package_path: "/opt/percona-xtrabackup-24-2.4.5-1.el7.x86_64.rpm"
+        - percona_arch_sha256: "8cadff677dcb05b451a7e3217a0c47dc79323426c70e81791e1091bd927c1874"
+        - qpress_arch_url: "https://repo.percona.com/centos/7/RPMS/x86_64/qpress-11-1.el7.x86_64.rpm"
+        - qpress_package_path: "/opt/qpress-11-1.el7.x86_64.rpm"
+        - qpress_arch_sha256: "d6b6b7ca3a5ad4baea34975743106ac54ac746b3e6497d59bce55765d604b697"
+        - galera_gpg_keys:
+            - key_name: 'RPM-GPG-KEY-MariaDB'
+            - keyserver: 'https://yum.mariadb.org'
+            - fallback_keyserver: 'https://yum.mariadb.org'
+        - galera_repo:
+            - name: MariaDB
+            - description: "MariaDB Repo"
+            - baseurl: "http://yum.mariadb.org/10.1/centos/7/x86_64"
+            - gpgkey: "https://yum.mariadb.org/RPM-GPG-KEY-MariaDB"
+
+os_keystone:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+      packages:
+        - keystone_distro_packages
+        - keystone_apache_distro_packages
+        - keystone_mod_wsgi_distro_packages
+        - keystone_mod_proxy_uwsgi_distro_packages
+        - keystone_nginx_distro_packages
+        - keystone_idp_distro_packages
+        - keystone_sp_distro_packages
+        - keystone_developer_mode_distro_packages
+  - redhat:
+      name: redhat-7.yml
+      packages:
+        - keystone_distro_packages
+        - keystone_apache_distro_packages
+        - keystone_mod_wsgi_distro_packages
+        - keystone_mod_proxy_uwsgi_distro_packages
+        - keystone_nginx_distro_packages
+        - keystone_idp_distro_packages
+        - keystone_sp_distro_packages
+        - keystone_developer_mode_distro_packages
+
+lxc_container_create:
+  - ubuntu:
+      name: ubuntu-16.04.yml
+  - redhat:
+      name: redhat-7.yml
+
+os_rally:
+  - ubuntu:
+      name: debian.yml
+      packages:
+        - rally_distro_packages
+
+ceph.ceph-common:
+  - ubuntu:
+      name: main.yml
+      packages:
+        - debian_package_dependencies
+        - debian_ceph_packages
+      special_packages:
+        - radosgw
+        - ceph-mds
+        - libjemalloc1
+        - nfs-ganesha-fsal
+        - ceph-mgr
+  - redhat:
+      name: main.yml
+      packages:
+        - centos_package_dependencies
+        - redhat_package_dependencies
+      special_packages:
+        - ceph
+        - ceph-mon
+        - ceph-osd
+        - ceph-mds
+        - ceph-fuse
+        - ceph-base
+        - ceph-radosgw
+        - nfs-ganesha-ceph
+        - nfs-ganesha-rgw
+        - ceph-mgr
