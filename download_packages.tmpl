@@ -75,5 +75,16 @@ EOF
 
 mkdir -p /opt/deb
 find /var/cache/apt/ -name '*.deb' | xargs -i cp {} /opt/deb/
+
+# add deb cache of OSA
+mkdir -p /opt/osa
+wget -O /opt/osa/osa_deb.tar.gz http://artifacts.opnfv.org/compass4nfv/package/master/osa_deb.tar.gz
+tar -zxf /opt/osa/osa_deb.tar.gz -C /opt/osa/
+cp /opt/osa/osa_deb/* /opt/deb/
+
+# bug fix for keepalived
+rm -rf /opt/deb/keepalived_1%3a1.2.23~ubuntu16.04.1_amd64.deb
+
+# make repo
 reprepro -b /var/www/html/xenial-$OPV-ppa includedeb xenial /opt/deb/*.deb
 
