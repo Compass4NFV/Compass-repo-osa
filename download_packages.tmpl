@@ -27,9 +27,8 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0xF1656F24C74CD1D8
 add-apt-repository 'deb http://mirror.rackspace.com/mariadb/repo/10.1/ubuntu xenial main'
 
 # rabbitmq
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0x6B73A36E6026DFCA
-add-apt-repository 'deb http://www.rabbitmq.com/debian testing main'
-#wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.9/rabbitmq-server_3.6.9-1_all.deb
+#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0x6B73A36E6026DFCA
+#add-apt-repository 'deb http://www.rabbitmq.com/debian testing main'
 
 # bird
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0xf2331238f9c59a45
@@ -39,9 +38,13 @@ add-apt-repository 'deb http://ppa.launchpad.net/cz.nic-labs/bird/ubuntu xenial 
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7C33BDC6
 add-apt-repository -y ppa:keepalived/stable
 
+# add gluster nfs ganesha repo
+add-apt-repository -y ppa:gluster/libntirpc
+add-apt-repository -y ppa:gluster/nfs-ganesha
+
 # ceph_client
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0xe84ac2c0460f3994
-add-apt-repository 'deb http://download.ceph.com/debian-kraken/ xenial main' # use j or k?
+add-apt-repository 'deb http://download.ceph.com/debian-jewel/ xenial main' # use j or k?
 
 # galera_server
 wget -O /var/cache/apt/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.5/binary/debian/xenial/x86_64/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb
