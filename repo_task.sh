@@ -9,7 +9,60 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 ##############################################################################
 
+source /opt/feature_package.conf
+
+mkdir -p /opt/deb
 apt-get update
+
+# download EX_DISTRO_PKG of feature
+for i in $EX_DISTRO_PKG; do
+    apt-get install -y $i -d
+done
+
+# download EXT_DISTRO_URL of feature
+mkdir -p /opt/feature
+cd /opt/feature
+for i in $EXT_DISTRO_URL; do
+    if [[ -n $i ]]; then
+        name=`basename $i`
+        wget -O /opt/feature/$name $i 
+        case $name in
+            *.tar.bz2)
+                tar xjf $name
+                ;;
+            *.tar.gz)
+                tar xzf $name
+                ;;
+            *.bz2)
+                bunzip2 $name
+                ;;
+            *.rar)
+                unrar e $name
+                ;;
+            *.gz)
+                gunzip $name
+                ;;
+            *.tar)
+                tar xf $name
+                ;;
+            *.tbz2)
+                tar xjf $name
+                ;;
+            *.tgz)
+                tar xzf $name
+                ;;
+            *.zip)
+                gunzip $name
+                ;;
+            *)
+                echo "'$name' cannot be extract()"
+                return
+                ;;
+        esac
+    fi
+done
+cd -
+find /opt/feature/ -name '*.deb' | xargs -i cp {} /opt/deb/
 
 chmod +x /opt/download_add_pkg.sh
 ./opt/download_add_pkg.sh
@@ -19,7 +72,6 @@ apt-get -y install git python-apt python-all python-dev curl python2.7-dev build
 libffi-dev netcat python-requests python-openssl python-pyasn1 python-netaddr python-prettytable \
 python-crypto python-yaml python-virtualenv python-ndg-httpsclient software-properties-common \
 wget python-cheetah nginx -d
-mkdir -p /opt/deb
 find /var/cache/apt/ -name '*.deb' | xargs -i cp {} /opt/deb/
 
 apt-get install -y git wget nginx python-cheetah python-yaml
@@ -53,6 +105,21 @@ wget -O /var/www/html/download.tar.gz http://artifacts.opnfv.org/compass4nfv/pac
 wget -O /var/www/html/pip_pkg.tar.gz http://artifacts.opnfv.org/compass4nfv/package/master/pip_pkg.tar.gz
 tar -zxf /var/www/html/pip_pkg.tar.gz -C /var/www/html/
 
+# download EXT_PIP_PKG
+for i in $EXT_PIP_PKG; do
+    if [[ -n $i ]]; then
+        pip install $i -d /var/www/html/pip_pkg/
+    fi
+done
+
+# download EXT_PIP_URL
+for i in $EXT_PIP_URL; do
+    if [[ -n $i ]]; then
+        name=`basename $i`
+        wget -O /var/www/html/pip_pkg/$name $i
+    fi
+done
+
 # add some special package
 wget -O /var/www/html/rabbitmq-server_3.6.9-1_all.deb http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.9/rabbitmq-server_3.6.9-1_all.deb
 wget -O /var/www/html/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.5/binary/debian/xenial/x86_64/percona-xtrabackup-24_2.4.5-1.xenial_amd64.deb
@@ -72,4 +139,5 @@ rm -rf /opt/roles.tar.gz
 rm -rf /etc/ansible/roles
 rm -rf /opt/deb
 rm -rf /opt/osa
+rm -rf /opt/feature
 rm -rf /var/www/html/pip_pkg.tar.gz

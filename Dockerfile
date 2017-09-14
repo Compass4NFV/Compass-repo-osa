@@ -16,6 +16,7 @@ ADD ./gen_download_pkg_script.py /opt/gen_download_pkg_script.py
 ADD ./package_name.yml /opt/package_name.yml
 ADD ./download_packages.tmpl /opt/download_packages.tmpl
 ADD ./repo_task.sh /opt/repo_task.sh
+ADD ./feature_package.conf /opt/feature_package.conf
 RUN chmod +x /opt/repo_task.sh
 RUN /opt/repo_task.sh
 
