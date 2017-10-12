@@ -77,8 +77,8 @@ find /var/cache/apt/ -name '*.deb' | xargs -i cp {} /opt/deb/
 apt-get install -y git wget nginx python-cheetah python-yaml
 
 # add special distro packages
-wget -O /opt/deb/gcc-5-base_5.4.0-6ubuntu1~16.04.4_amd64.deb http://launchpadlibrarian.net/291946892/gcc-5-base_5.4.0-6ubuntu1~16.04.4_amd64.deb
-wget -O /opt/deb/libstdc++6_5.4.0-6ubuntu1~16.04.4_amd64.deb http://launchpadlibrarian.net/291947015/libstdc++6_5.4.0-6ubuntu1~16.04.4_amd64.deb
+wget -O /opt/deb/gcc-5-base_5.4.0-6ubuntu1~16.04.5_amd64.deb http://launchpadlibrarian.net/336920226/gcc-5-base_5.4.0-6ubuntu1~16.04.5_amd64.deb
+wget -O /opt/deb/libstdc++6_5.4.0-6ubuntu1~16.04.5_amd64.deb http://launchpadlibrarian.net/336920453/libstdc++6_5.4.0-6ubuntu1~16.04.5_amd64.deb
 wget -O /opt/deb/libarchive13_3.1.2-11ubuntu0.16.04.3_amd64.deb http://launchpadlibrarian.net/310274057/libarchive13_3.1.2-11ubuntu0.16.04.3_amd64.deb
 wget -O /opt/deb/libc6_2.23-0ubuntu9_amd64.deb http://launchpadlibrarian.net/324305509/libc6_2.23-0ubuntu9_amd64.deb
 wget -O /opt/deb/libkmod2_22-1ubuntu5_amd64.deb http://launchpadlibrarian.net/330554478/libkmod2_22-1ubuntu5_amd64.deb
