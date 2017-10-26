@@ -20,49 +20,12 @@ for i in $EX_DISTRO_PKG; do
 done
 
 # download EXT_DISTRO_URL of feature
-mkdir -p /opt/feature
-cd /opt/feature
 for i in $EXT_DISTRO_URL; do
     if [[ -n $i ]]; then
         name=`basename $i`
-        wget -O /opt/feature/$name $i 
-        case $name in
-            *.tar.bz2)
-                tar xjf $name
-                ;;
-            *.tar.gz)
-                tar xzf $name
-                ;;
-            *.bz2)
-                bunzip2 $name
-                ;;
-            *.rar)
-                unrar e $name
-                ;;
-            *.gz)
-                gunzip $name
-                ;;
-            *.tar)
-                tar xf $name
-                ;;
-            *.tbz2)
-                tar xjf $name
-                ;;
-            *.tgz)
-                tar xzf $name
-                ;;
-            *.zip)
-                gunzip $name
-                ;;
-            *)
-                echo "'$name' cannot be extract()"
-                return
-                ;;
-        esac
+        wget -O /var/www/html/$name $i
     fi
 done
-cd -
-find /opt/feature/ -name '*.deb' | xargs -i cp {} /opt/deb/
 
 chmod +x /opt/download_add_pkg.sh
 ./opt/download_add_pkg.sh
