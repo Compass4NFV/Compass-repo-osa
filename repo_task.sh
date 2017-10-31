@@ -19,14 +19,6 @@ for i in $EX_DISTRO_PKG; do
     apt-get install -y $i -d
 done
 
-# download EXT_DISTRO_URL of feature
-for i in $EXT_DISTRO_URL; do
-    if [[ -n $i ]]; then
-        name=`basename $i`
-        wget -O /var/www/html/$name $i
-    fi
-done
-
 chmod +x /opt/download_add_pkg.sh
 ./opt/download_add_pkg.sh
 
@@ -67,6 +59,14 @@ wget -O /var/www/html/download.tar.gz http://artifacts.opnfv.org/compass4nfv/pac
 # add pip cache of OSA
 wget -O /var/www/html/pip_pkg.tar.gz http://artifacts.opnfv.org/compass4nfv/package/master/pip_pkg.tar.gz
 tar -zxf /var/www/html/pip_pkg.tar.gz -C /var/www/html/
+
+# download EXT_DISTRO_URL of feature
+for i in $EXT_DISTRO_URL; do
+    if [[ -n $i ]]; then
+        name=`basename $i`
+        wget -O /var/www/html/$name $i
+    fi
+done
 
 # download EXT_PIP_PKG
 for i in $EXT_PIP_PKG; do
