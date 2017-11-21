@@ -26,7 +26,7 @@ chmod +x /opt/download_add_pkg.sh
 apt-get -y install git python-apt python-all python-dev curl python2.7-dev build-essential libssl-dev \
 libffi-dev netcat python-requests python-openssl python-pyasn1 python-netaddr python-prettytable \
 python-crypto python-yaml python-virtualenv python-ndg-httpsclient software-properties-common \
-wget python-cheetah nginx -d
+wget python-cheetah nginx crudini -d
 find /var/cache/apt/ -name '*.deb' | xargs -i cp {} /opt/deb/
 
 apt-get install -y git wget nginx python-cheetah python-yaml
