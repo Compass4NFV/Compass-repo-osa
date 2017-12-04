@@ -90,6 +90,7 @@ wget -O /var/www/html/qpress_11-1.xenial_amd64.deb https://repo.percona.com/apt/
 wget -O /var/www/html/hatop-0.7.7.tar.gz https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/hatop/hatop-0.7.7.tar.gz
 wget -O /var/www/html/get-pip.py https://bootstrap.pypa.io/get-pip.py
 wget -O /var/www/html/upper-constraints.txt https://git.openstack.org/cgit/openstack/requirements/plain/upper-constraints.txt?id=90094c5d578ecfc4ab1e9f38a86bca5b615a3527
+wget -O /var/www/html/tacker-horizon.tar.gz http://artifacts.opnfv.org/compass4nfv/package/master/tacker-horizon.tar.gz
 
 # generate simple
 apt install -y python-pip
